@@ -50,3 +50,14 @@ spec:
                 name: convertidor-service 
                 port:
                   number: 2000
+
+    - host: data.10enconta.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-xml
+                port:
+                  number: 80

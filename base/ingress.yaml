@@ -14,6 +14,7 @@ spec:
         - api.iglepay.com
         - mi.iglepay.com
         - convertidor.iglepay.com
+        - data.10enconta.com
       secretName: iglepay-tls
   rules:
     - host: iglepay.com
@@ -70,3 +71,15 @@ spec:
                 name: convertidor-service 
                 port:
                   number: 2000 
+
+    - host: data.10enconta.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-xml
+                port:
+                  number: 80
+
