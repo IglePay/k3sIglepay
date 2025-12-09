@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: website-config
+  namespace: default
+data:
+  EMAIL_RECIPIENT: "iglepaytorres@gmail.com"
+  NEXT_PUBLIC_RECAPTCHA_SITE_KEY: "6LdhwvIrAAAAAJR2Z-DJ1lFThaY_Op-1WhsujoGN"
+  NEXT_PUBLIC_GA_TRACKING_ID: "G-SBV4N2SG91"
+

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+spec:
+  selector:
+    matchLabels:
+      app: website
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      containers:
+        - name: website
+          image: romeo188/iglepay-website:v1.2.6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: website-config
+            - secretRef:
+                name: website-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: website
+spec:
+  selector:
+    app: website
+  ports:
+    - port: 80
+      targetPort: 5000
+  type: ClusterIP
+

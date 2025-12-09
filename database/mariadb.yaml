@@ -3,11 +3,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: mariadb-pvc
 spec:
+  storageClassName: local-path-expandable
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 40Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,15 +35,23 @@ spec:
               value: "iglepay"
             - name: MYSQL_PASSWORD
               value: "iglepay.com#"
+            - name: TZ
+              value: America/Guatemala
           ports:
             - containerPort: 3306
           volumeMounts:
             - name: mariadb-storage
               mountPath: /var/lib/mysql
+            - name: localtime
+              mountPath: /etc/localtime
+              readOnly: true
       volumes:
         - name: mariadb-storage
           persistentVolumeClaim:
             claimName: mariadb-pvc
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
 ---
 apiVersion: v1
 kind: Service

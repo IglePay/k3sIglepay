@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convertidor
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: convertidor
+  template:
+    metadata:
+      labels:
+        app: convertidor
+    spec:
+      containers:
+        - name: convertidor
+          image: romeo188/pdf-converter:v1.0.5
+          ports:
+            - containerPort: 2000
+          env:
+            - name: CONVERT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: secret-convertidor
+                  key: CONVERT_TOKEN
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-convertidor
+                  key: PORT
+            - name: UPLOAD_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-convertidor
+                  key: UPLOAD_DIR
+            - name: OUTPUT_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-convertidor
+                  key: OUTPUT_DIR
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+            - name: converted
+              mountPath: /app/converted
+      volumes:
+        - name: uploads
+          emptyDir: {}
+        - name: converted
+          emptyDir: {}
+

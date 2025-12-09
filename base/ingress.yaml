@@ -1,0 +1,72 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: iglepay-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik              #  usa Traefik, no nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod  #  tu ClusterIssuer
+spec:
+  ingressClassName: traefik                           #  explícitamente indica Traefik
+  tls:
+    - hosts:
+        - iglepay.com
+        - www.iglepay.com
+        - api.iglepay.com
+        - mi.iglepay.com
+        - convertidor.iglepay.com
+      secretName: iglepay-tls
+  rules:
+    - host: iglepay.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: website
+                port:
+                  number: 80
+
+    - host: www.iglepay.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+
+    - host: api.iglepay.com
+      http:
+        paths:
+          - path: /api/v1
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 4000
+
+    - host: mi.iglepay.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+
+    - host: convertidor.iglepay.com      
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: convertidor-service 
+                port:
+                  number: 2000 

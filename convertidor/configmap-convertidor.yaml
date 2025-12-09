@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-convertidor
+  namespace: default
+data:
+  PORT: "2000"
+  UPLOAD_DIR: "uploads"
+  OUTPUT_DIR: "converted"
+
