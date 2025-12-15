@@ -23,7 +23,7 @@ spec:
               value: America/Guatemala
           envFrom:
             - secretRef:
-                name: backend-secrets
+                name: backend-iglepay-env-secret
           resources:
             requests:
               cpu: 150m

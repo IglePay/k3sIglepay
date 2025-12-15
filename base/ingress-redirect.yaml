@@ -61,3 +61,14 @@ spec:
                 name: frontend-xml
                 port:
                   number: 80
+
+    - host: api.10enconta.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-xml
+                port:
+                  number: 8000

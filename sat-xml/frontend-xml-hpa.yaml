@@ -7,8 +7,25 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: frontend-xml
-  minReplicas: 2
+
+  minReplicas: 1
   maxReplicas: 10
+
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300   #  espera 5 minutos antes de bajar
+      policies:
+        - type: Pods
+          value: 1                       # baja SOLO 1 pod
+          periodSeconds: 60              # cada 60 segundos
+
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Pods
+          value: 2                       # puede subir 2 pods
+          periodSeconds: 60
+
   metrics:
     - type: Resource
       resource:

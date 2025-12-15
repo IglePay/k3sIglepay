@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-xml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-xml
+  template:
+    metadata:
+      labels:
+        app: backend-xml
+    spec:
+      containers:
+        - name: backend-xml
+          image: romeo188/backend-xml:v1.5.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: TZ
+              value: America/Guatemala
+          envFrom:
+            - secretRef:
+                name: backend-secrets
+          resources:
+            requests:
+              cpu: 150m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10 
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-xml
+spec:
+  selector:
+    app: backend-xml
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: ClusterIP
+
