@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: frontend-xml
 
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 10
 
   behavior:
@@ -33,4 +33,12 @@ spec:
         target:
           type: Utilization
           averageUtilization: 75
+
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 70
 

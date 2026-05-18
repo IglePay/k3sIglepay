@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-xml
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,13 +19,15 @@ spec:
     spec:
       containers:
         - name: frontend-xml
-          image: romeo188/frontend-xml:v1.0.5
+          image: romeo188/frontend-xml:v1.0.17
           imagePullPolicy: Always
           ports:
             - containerPort: 7000
           env:
             - name: TZ
               value: America/Guatemala
+            - name: NODE_OPTIONS
+              value: "--max-old-space-size=3072"
           envFrom:
             - configMapRef:
                 name: frontend-config
@@ -34,11 +36,11 @@ spec:
 
           resources:
             requests:
-              cpu: 300m
-              memory: 256Mi
+              cpu: 500m
+              memory: 2Gi
             limits:
-              cpu: 1000m
-              memory: 512Mi
+              cpu: 2000m
+              memory: 4Gi
 ---
 apiVersion: v1
 kind: Service

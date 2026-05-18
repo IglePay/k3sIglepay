@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: selah-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: selah-app
+  template:
+    metadata:
+      labels:
+        app: selah-app
+    spec:
+      containers:
+        - name: selah-app
+          image: romeo188/selah:selah-v1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: TZ
+              value: America/Guatemala
+          envFrom:
+            - configMapRef:
+                name: frontend-config
+            - secretRef:
+                name: frontend-secret
+          resources:
+            requests:
+              cpu: 300m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: selah-service
+spec:
+  selector:
+    app: selah-app
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP

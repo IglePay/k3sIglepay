@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: website
-          image: romeo188/iglepay-website:v1.2.7
+          image: romeo188/iglepay-website:v1.2.8
           imagePullPolicy: Always
           ports:
             - containerPort: 5000

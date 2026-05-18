@@ -8,7 +8,14 @@ stringData:
   JWT_SECRET: "WV6d6rnkiqXRsGvNVLcwtQPM7U9Gy6UT7AEL7A7aY6Y=%"
   JWT_EXPIRES_IN: "15m"
   REFRESH_TOKEN_EXPIRES_IN: "1d"
+  CSRF_SECRET: MTBlbmNvbnRhQ1NSRg==
+  CORS_ORIGINS: https://data.10enconta.com,https://www.data.10enconta.com,https://api.10enconta.com
 
+  MAIL_DRIVER: "resend"
+  RESEND_API_KEY: "re_eAY8XLac_9Eqze1Z9W91YZyyJSAtHgwqn"
+  MAIL_FROM: "10enconta <no-reply@data.10enconta.com>"
+
+  NODE_ENV: production
 ---
 apiVersion: v1
 kind: ConfigMap

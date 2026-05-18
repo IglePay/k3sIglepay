@@ -4,6 +4,8 @@ metadata:
   name: frontend-config
 data:
   NEXT_PUBLIC_API_URL: "https://api.10enconta.com"
+  NODE_ENV: "production"
+  CSP_CONNECT_SRC: "https://api.10enconta.com"
   TZ: "America/Guatemala"
 ---
 apiVersion: v1
